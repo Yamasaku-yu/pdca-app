@@ -9,7 +9,7 @@ export default function Navbar({ brandUrl }) {
   }, []);
 
   const fetchData = () => {
-    fetch(`http://localhost:5000/api/pdca/session`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/pdca/session`, {
       method: "GET",
       credentials: "include", // クッキーを送信するために必須
     })
@@ -22,7 +22,7 @@ export default function Navbar({ brandUrl }) {
   };
 
   const logout = async () => {
-    const response = await fetch("http://localhost:5000/api/pdca/logout", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/logout`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -42,7 +42,7 @@ export default function Navbar({ brandUrl }) {
       <div className="container-fluid">
         <a
           className="navbar-brand"
-          href={`http://localhost:3000/${brandUrl}`}
+          href={`/${brandUrl}`}
         >
           PDCA
         </a>

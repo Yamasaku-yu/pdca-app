@@ -33,7 +33,7 @@ export default function Home() {
   }, [listId]);
 
   const fetchData = () => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}/lists/${listId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`)
       .then((res) => res.json())
       .then((data) => {
         setPdcaData(data.pdcaData);
@@ -43,7 +43,7 @@ export default function Home() {
   };
 
   const addPdca = () => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}/lists/${listId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: newStage, description: newDiscription }),
@@ -64,7 +64,7 @@ export default function Home() {
 
   const handleEditSave = (pdcaId, newStage, newDiscription) => {
     fetch(
-      `http://localhost:5000/api/pdca/user/${userId}/lists/${listId}/${pdcaId}`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}/${pdcaId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -80,7 +80,7 @@ export default function Home() {
 
   const deletePdca = (pdcaId) => {
     fetch(
-      `http://localhost:5000/api/pdca/user/${userId}/lists/${listId}/${pdcaId}`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}/${pdcaId}`,
       {
         method: "DELETE",
       }

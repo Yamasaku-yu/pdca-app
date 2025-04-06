@@ -25,13 +25,13 @@ export default function List() {
   }, [userId]);
 
   const fetchData = () => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`)
       .then((res) => res.json())
       .then((data) => setListData(data));
   };
 
   const addList = () => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: newList }),
@@ -44,13 +44,13 @@ export default function List() {
   };
 
   const deleteList = (listId) => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}/lists/${listId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`, {
       method: "DELETE",
     }).then(() => fetchData());
   };
 
   const nameChange = (listId) => {
-    fetch(`http://localhost:5000/api/pdca/user/${userId}/lists/${listId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: editedName }),

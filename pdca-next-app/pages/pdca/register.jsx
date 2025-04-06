@@ -11,7 +11,7 @@ export default function Register() {
 
   const registerUser = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/pdca/register", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
