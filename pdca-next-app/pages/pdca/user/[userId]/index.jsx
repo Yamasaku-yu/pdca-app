@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import AddForm from "../../components/add/addForm";
-import AlertButton from "../../components/add/alertButton";
+import AddForm from "../../../../components/pdca/add/addForm";
+import AlertButton from "../../../../components/pdca/add/alertButton";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "../../components/card";
-import Navbar from "../../components/navbar";
+import Card from "../../../../components/pdca/card";
+import Navbar from "../../../../components/pdca/navbar";
 import { useRouter } from "next/router";
 
 export default function List() {
