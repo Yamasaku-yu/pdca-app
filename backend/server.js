@@ -39,6 +39,8 @@ app.use(
 );
 app.use(express.json());
 
+app.use(express.static('pdca-next-app'));
+
 const PORT = process.env.PORT || 5000;
 
 app.post("/api/pdca/register", async (req, res) => {
