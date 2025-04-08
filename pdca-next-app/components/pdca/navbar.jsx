@@ -9,7 +9,7 @@ export default function Navbar({ brandUrl }) {
   }, []);
 
   const fetchData = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/session`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/pdca/session`, {
       method: "GET",
       credentials: "include", // クッキーを送信するために必須
     })
