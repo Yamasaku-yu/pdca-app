@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("./models/user");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
 
 require("dotenv").config();
 
@@ -20,7 +21,12 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: "your_secret_key",
+    store: MongoStore.create({
+      client:mongoose.connection.getClient(),
+      collectionName:"sessions",
+      stringify:false,
+    }),
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
