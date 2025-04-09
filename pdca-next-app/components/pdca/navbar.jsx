@@ -44,12 +44,12 @@ export default function Navbar({ brandUrl }) {
     <nav className="navbar navbar-expand-lg bg-secondary navbar-dark">
       <div className="container-fluid">
         <div className="row">
-          <div className="col">
+          <div className="col text-start">
             <a className="navbar-brand" href={`/${brandUrl}`}>
               PDCA
             </a>
           </div>
-          <div className="col">
+          <div className="col text-end">
             <button
               className="navbar-toggler"
               data-bs-toggle="collapse"
