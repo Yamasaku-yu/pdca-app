@@ -12,6 +12,8 @@ const MongoStore = require("connect-mongo");
 
 require("dotenv").config();
 
+app.set('trust proxy', 1);
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("データベース接続に成功しました"))
