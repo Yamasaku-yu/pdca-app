@@ -43,45 +43,39 @@ export default function Navbar({ brandUrl }) {
   return (
     <nav className="navbar navbar-expand-lg bg-secondary navbar-dark">
       <div className="container-fluid">
-        <div className="row">
-          <div className="col text-start">
-            <a className="navbar-brand" href={`/${brandUrl}`}>
-              PDCA
-            </a>
-          </div>
-          <div className="col text-end">
-            <button
-              className="navbar-toggler"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarToggler"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarToggler">
-              {session ? (
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <button className="btn btn-link nav-link" onClick={logout}>
-                      ログアウト
-                    </button>
-                  </li>
-                </ul>
-              ) : (
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <a className="nav-link" href="/pdca/register">
-                      ユーザー登録
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="/pdca/login">
-                      ログイン
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </div>
-          </div>
+        <a className="navbar-brand" href={`/${brandUrl}`}>
+          PDCA
+        </a>
+        <button
+          className="navbar-toggler"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarToggler"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarToggler">
+          {session ? (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <button className="btn btn-link nav-link" onClick={logout}>
+                  ログアウト
+                </button>
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/pdca/register">
+                  ユーザー登録
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/pdca/login">
+                  ログイン
+                </a>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
