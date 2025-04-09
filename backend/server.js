@@ -22,9 +22,8 @@ app.use(cookieParser());
 app.use(
   session({
     store: MongoStore.create({
-      client:mongoose.connection.getClient(),
+      mongoUrl:process.env.MONGO_URI,
       collectionName:"sessions",
-      stringify:false,
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
