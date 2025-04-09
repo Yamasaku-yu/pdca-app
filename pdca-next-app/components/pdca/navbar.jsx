@@ -57,6 +57,11 @@ export default function Navbar({ brandUrl }) {
           {session ? (
             <ul className="navbar-nav">
               <li className="nav-item">
+                <a className="nav-link" href={`/${brandUrl}`}>
+                  フォルダ
+                </a>
+              </li>
+              <li className="nav-item">
                 <button className="btn btn-link nav-link" onClick={logout}>
                   ログアウト
                 </button>
