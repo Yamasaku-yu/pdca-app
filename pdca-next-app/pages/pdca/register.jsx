@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import UserForm from "../../components/pdca/userForm";
-import Navbar from "../../components/pdca/navbar";
+import UserForm from "../components/userForm";
+import Navbar from "../components/navbar";
 
 export default function Register() {
   const [username, setUsername] = useState("");

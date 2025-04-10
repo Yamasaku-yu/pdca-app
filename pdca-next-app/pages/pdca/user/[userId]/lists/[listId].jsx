@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import AlertButton from "../../../../../components/pdca/add/alertButton";
 import StageSelect from "../../../../../components/pdca/add/stageSelect";
 import AddForm from "../../../../../components/pdca/add/addForm";
-import EStageSelect from "../../../../../components/pdca/edit/eStageSelect";
-import EditForm from "../../../../../components/pdca/edit/editForm";
-import SaveButton from "../../../../../components/pdca/edit/saveButton";
-import DeleteButton from "../../../../../components/pdca/edit/deleteButton";
-import CardContent from "../../../../../components/pdca/edit/cardContent";
+import EStageSelect from "../../../../components/edit/eStageSelect";
+import EditForm from "../../../../components/edit/editForm";
+import SaveButton from "../../../../components/edit/saveButton";
+import DeleteButton from "../../../../components/edit/deleteButton";
+import CardContent from "../../../../components/edit/cardContent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
-import Navbar from "../../../../../components/pdca/navbar";
+import Navbar from "../../../../components/navbar";
 
 export default function Home() {
   const router = useRouter();

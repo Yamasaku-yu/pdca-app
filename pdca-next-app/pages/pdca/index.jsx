@@ -1,4 +1,4 @@
-import Navbar from "../../components/pdca/navbar";
+import Navbar from "../components/navbar";
 export default function Home() {
   return (
     <div>
