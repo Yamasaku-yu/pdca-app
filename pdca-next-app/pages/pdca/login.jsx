@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div>
-      <Navbar brandUrl={`pdca/login`} />
+      <Navbar brandUrl={`pdca`} />
       <UserForm
         title={"ログイン"}
         username={username}

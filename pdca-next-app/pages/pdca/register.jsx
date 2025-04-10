@@ -31,7 +31,7 @@ export default function Register() {
 
   return (
     <div>
-      <Navbar brandUrl={`pdca/register`} />
+      <Navbar brandUrl={`pdca`} />
       <UserForm
         title={"ユーザー登録"}
         username={username}
