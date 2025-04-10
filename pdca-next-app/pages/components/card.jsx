@@ -15,10 +15,10 @@ export default function Card({
   return (
     <Link
       className={`card text-decoration-none ${styles.cardHover}`}
-      href={editing ? "#" : `/pdca/user/${userId}/lists/${item._id}`}
+      href={editing ? "#" : `/pdca/user/${userId}/lists/${item?._id}`}
     >
       <div className="card-body row">
-        {nameEditingId === item._id ? (
+        {nameEditingId === item?._id ? (
           <input
             className="form-control col text-start"
             type="text"
@@ -26,16 +26,16 @@ export default function Card({
             onChange={(e) => setEditedName(e.target.value)}
           />
         ) : (
-          <div className="col text-start"> {item.name}</div>
+          <div className="col text-start"> {item?.name}</div>
         )}
         {editing ? (
           <div className="col text-end">
             <div className="row justify-content-end">
               <div className="col">
-                {nameEditingId === item._id ? (
+                {nameEditingId === item?._id ? (
                   <button
                     className="btn btn-dark btn-sm"
-                    onClick={editedName?() => nameChange(item._id):undefined}
+                    onClick={editedName?() => nameChange(item?._id):undefined}
                   >
                     決定
                   </button>
@@ -43,8 +43,8 @@ export default function Card({
                   <button
                     className="btn btn-dark btn-sm"
                     onClick={() => {
-                      setNameEditingId(item._id);
-                      setEditedName(item.name);
+                      setNameEditingId(item?._id);
+                      setEditedName(item?.name);
                     }}
                   >
                     名前変更
@@ -55,7 +55,7 @@ export default function Card({
                 <button
                   className="btn btn-outline-dark btn-sm"
                   style={{ "--bs-btn-padding-y": " .1000rem" }}
-                  onClick={() => deleteList(item._id)}
+                  onClick={() => deleteList(item?._id)}
                 >
                   ×
                 </button>
