@@ -44,17 +44,23 @@ export default function List() {
   };
 
   const deleteList = (listId) => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`, {
-      method: "DELETE",
-    }).then(() => fetchData());
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`,
+      {
+        method: "DELETE",
+      }
+    ).then(() => fetchData());
   };
 
   const nameChange = (listId) => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: editedName }),
-    }).then(() => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: editedName }),
+      }
+    ).then(() => {
       setNameEditingId("");
       setEditedName("");
       fetchData();
@@ -72,15 +78,17 @@ export default function List() {
           setEditing={setEditing}
           setNameEditingId={setNameEditingId}
         />
-        <button
-          className="btn btn-secondary ms-2"
-          onClick={() => {
-            setEditing(!editing);
-            setNameEditingId("");
-          }}
-        >
-          {editing ? "終了" : "編集"}
-        </button>
+        {listData.length? (
+          <button
+            className="btn btn-secondary ms-2"
+            onClick={() => {
+              setEditing(!editing);
+              setNameEditingId("");
+            }}
+          >
+            {editing ? "終了" : "編集"}
+          </button>
+        ):(null)}
         {alertState && (
           <div className="row alert alert-secondary my-2">
             <AddForm
