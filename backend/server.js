@@ -43,7 +43,7 @@ const allowedOrigins = [
   process.env.FRONTEND_ORIGIN_1,
   process.env.FRONTEND_ORIGIN_2,
   process.env.FRONTEND_ORIGIN_3,
-  "http://localhost:3000",
+  "http://localhost:3001",
 ];
 
 app.use(
