@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import AddForm from "../../../../components/pdca/add/addForm";
-import AlertButton from "../../../../components/pdca/add/alertButton";
+import AddForm from "../../../components/add/addForm";
+import AlertButton from "../../../components/add/alertButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "../../../components/card";
 import Navbar from "../../../components/navbar";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import AlertButton from "../../../../../components/pdca/add/alertButton";
-import StageSelect from "../../../../../components/pdca/add/stageSelect";
-import AddForm from "../../../../../components/pdca/add/addForm";
+import AlertButton from "../../../../components/add/alertButton";
+import StageSelect from "../../../../components/add/stageSelect";
+import AddForm from "../../../../components/add/addForm";
 import EStageSelect from "../../../../components/edit/eStageSelect";
 import EditForm from "../../../../components/edit/editForm";
 import SaveButton from "../../../../components/edit/saveButton";
