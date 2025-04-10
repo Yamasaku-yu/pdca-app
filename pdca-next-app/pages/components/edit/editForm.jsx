@@ -7,7 +7,7 @@ export default function EditForm({editedDescription,setEditedDescription,handleE
         onChange={(e) => setEditedDescription(e.target.value)}
         onKeyDown={(e) =>
           e.key === "Enter" &&
-          handleEditSave(item._id, editedStage, editedDescription)
+          handleEditSave(item?._id, editedStage, editedDescription)
         }
       />
     )

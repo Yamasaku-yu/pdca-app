@@ -2,7 +2,7 @@ export default function SaveButton({item,handleEditSave,editedStage,editedDescri
   return (
     <button
       className="btn btn-dark ms-sm-1"
-      onClick={() => handleEditSave(item._id, editedStage, editedDescription)}
+      onClick={() => handleEditSave(item?._id, editedStage, editedDescription)}
     >
       保存
     </button>
