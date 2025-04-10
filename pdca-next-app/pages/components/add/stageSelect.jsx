@@ -6,7 +6,7 @@ export default function StageSelect({newStage,setNewStage,stages}) {
         value={newStage}
         onChange={(e) => setNewStage(e.target.value)}
       >
-        {stages.map((stage) => (
+        {stages?.map((stage) => (
           <option value={stage} key={stage}>
             {stage}
           </option>
