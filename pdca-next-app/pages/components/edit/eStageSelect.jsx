@@ -7,7 +7,7 @@ export default function EStageSelect({ editedStage, setEditedStage, stages }) {
         setEditedStage(e.target.value);
       }}
     >
-      {stages.map((stage) => (
+      {stages?.map((stage) => (
         <option value={stage} key={stage}>
           {stage}
         </option>
