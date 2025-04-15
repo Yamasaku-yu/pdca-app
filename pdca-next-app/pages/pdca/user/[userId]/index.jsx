@@ -5,13 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "../../../components/card";
 import Navbar from "../../../components/navbar";
 import { useRouter } from "next/router";
+import styles from "../../../styles/Card.module.css"
 
-export default function List() {
-  const [listData, setListData] = useState([]);
+export default function Folder() {
+  const [folderData, setFolderData] = useState([]);
   const [alertState, setAlertState] = useState(false);
-  const [newList, setNewList] = useState();
+  const [newFolder, setNewFolder] = useState("");
   const [editing, setEditing] = useState(false);
-  const [nameEditingId, setNameEditingId] = useState();
+  const [nameEditingId, setNameEditingId] = useState("");
   const [editedName, setEditedName] = useState("");
 
   const router = useRouter();
@@ -27,34 +28,35 @@ export default function List() {
   const fetchData = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`)
       .then((res) => res.json())
-      .then((data) => setListData(data));
+      .then((data) => setFolderData(data));
   };
 
-  const addList = () => {
+  const addFolder = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newList }),
+      body: JSON.stringify({ name: newFolder }),
     })
-      .then((res) => res.json)
-      .then(() => {
-        setNewList("");
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setNewFolder("");
         fetchData();
       });
   };
 
-  const deleteList = (listId) => {
+  const deleteFolder = (folderId) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}`,
       {
         method: "DELETE",
       }
     ).then(() => fetchData());
   };
 
-  const nameChange = (listId) => {
+  const nameChange = (folderId) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/lists/${listId}`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -71,14 +73,14 @@ export default function List() {
     <>
       <Navbar brandUrl={`pdca/user/${userId}`} />
       <div className="container">
-        <h1>PDCAフォルダ</h1>
+        <h3 className="mt-3">PDCAフォルダ</h3>
         <AlertButton
           alertState={alertState}
           setAlertState={setAlertState}
           setEditing={setEditing}
           setNameEditingId={setNameEditingId}
         />
-        {listData.length? (
+        {folderData.length? (
           <button
             className="btn btn-secondary ms-2"
             onClick={() => {
@@ -92,20 +94,20 @@ export default function List() {
         {alertState && (
           <div className="row alert alert-secondary my-2">
             <AddForm
-              newDiscription={newList}
-              setNewDiscription={setNewList}
-              addPdca={addList}
+              newDiscription={newFolder}
+              setNewDiscription={setNewFolder}
+              addPdca={addFolder}
             />
           </div>
         )}
         <ul className="list-unstyled">
-          {listData.map((item) => (
+          {folderData.map((item) => (
             <li key={item._id} className="mb-2">
               <Card
                 item={item}
                 userId={userId}
                 editing={editing}
-                deleteList={deleteList}
+                deleteFolder={deleteFolder}
                 nameEditingId={nameEditingId}
                 setNameEditingId={setNameEditingId}
                 editedName={editedName}

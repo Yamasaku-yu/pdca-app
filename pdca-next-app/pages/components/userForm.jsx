@@ -12,7 +12,7 @@ export default function UserForm({title,username,password,setUsername,setPasswor
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <label htmlForfor="inputPassword5" className="form-label">
+      <label htmlFor="inputPassword5" className="form-label">
         Password
       </label>
       <input

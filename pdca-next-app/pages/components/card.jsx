@@ -1,11 +1,11 @@
 import Link from "next/link";
-import styles from "../../styles/Card.module.css";
+import styles from "../styles/Card.module.css";
 
 export default function Card({
   item,
   userId,
   editing,
-  deleteList,
+  deleteFolder,
   nameEditingId,
   setNameEditingId,
   nameChange,
@@ -14,8 +14,8 @@ export default function Card({
 }) {
   return (
     <Link
-      className={`card text-decoration-none ${styles.cardHover}`}
-      href={editing ? "#" : `/pdca/user/${userId}/lists/${item?._id}`}
+      className={`card text-decoration-none ${styles.white}`}
+      href={editing ? "#" : `/pdca/user/${userId}/folders/${item?._id}`}
     >
       <div className="card-body row">
         {nameEditingId === item?._id ? (
@@ -55,7 +55,7 @@ export default function Card({
                 <button
                   className="btn btn-outline-dark btn-sm"
                   style={{ "--bs-btn-padding-y": " .1000rem" }}
-                  onClick={() => deleteList(item?._id)}
+                  onClick={() => deleteFolder(item?._id)}
                 >
                   ×
                 </button>

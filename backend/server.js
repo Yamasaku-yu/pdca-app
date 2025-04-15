@@ -4,15 +4,16 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const pdcaModel = require("./models/pdca");
 const listModel = require("./models/list");
-const bcrypt = require("bcrypt");
+const folderModel = require("./models/folder");
 const userModel = require("./models/user");
+const bcrypt = require("bcrypt");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 
 require("dotenv").config();
 
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -20,6 +21,8 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(cookieParser());
+
+const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   session({
@@ -32,8 +35,8 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000,
     },
   })
@@ -100,78 +103,135 @@ app.get("/api/pdca/session", (req, res) => {
 });
 
 app.get("/api/pdca/user/:userId", async (req, res) => {
-  const user = await userModel.findById(req.params.userId).populate("lists");
-  const listData = user.lists;
-  res.json(listData);
+  const user = await userModel.findById(req.params.userId).populate("folders");
+  const folderData = user.folders;
+  res.json(folderData);
 });
 
 app.post("/api/pdca/user/:userId", async (req, res) => {
   const user = await userModel.findById(req.params.userId);
-  const newList = new listModel(req.body);
-  user.lists.push(newList);
-  newList.user = user;
+  const newFolder = new folderModel(req.body);
+  user.folders.push(newFolder);
+  newFolder.user = user;
   await user.save();
-  await newList.save();
-  res.status(201).json(newList);
+  await newFolder.save();
+  res.status(201).json(newFolder);
 });
 
-app.get("/api/pdca/user/:userId/lists/:listId", async (req, res) => {
-  const list = await listModel.findById(req.params.listId).populate("pdcas");
-  const pdcaData = list.pdcas;
-  res.json({ pdcaData, listName: list.name });
+app.delete("/api/pdca/user/:userId/folders/:folderId", async (req, res) => {
+  const { userId, folderId } = req.params;
+  await userModel.findByIdAndUpdate(userId, { $pull: { folders: folderId } });
+  const deleteFolder = await folderModel.findByIdAndDelete(folderId);
+  await listModel.deleteMany({ folder: folderId });
+  await pdcaModel.deleteMany({ folder: folderId });
+  res.json(deleteFolder);
 });
 
-app.post("/api/pdca/user/:userId/lists/:listId", async (req, res) => {
-  const { listId } = req.params;
-  const list = await listModel.findById(listId);
-  const { stage, description } = req.body;
-  const newPdca = new pdcaModel({ stage, description });
-  list.pdcas.push(newPdca);
-  newPdca.list = list;
-  await list.save();
-  await newPdca.save();
-  res.status(201).json(newPdca);
-});
-
-app.delete("/api/pdca/user/:userId/lists/:listId", async (req, res) => {
-  const { userId, listId } = req.params;
-  console.log("userId", userId, "listId", listId);
-  await userModel.findByIdAndUpdate(userId, { $pull: { lists: listId } });
-  const deleteList = await listModel.findByIdAndDelete(listId);
-  await pdcaModel.deleteMany({ list: listId });
-  res.json(deleteList);
-});
-
-app.put("/api/pdca/user/:userId/lists/:listId", async (req, res) => {
-  const { listId } = req.params;
+app.put("/api/pdca/user/:userId/folders/:folderId", async (req, res) => {
+  const { folderId } = req.params;
   const { name } = req.body;
-  const editList = await listModel.findByIdAndUpdate(
-    listId,
+  const editFolder = await listModel.findByIdAndUpdate(
+    folderId,
     {
       name,
     },
     { new: true }
   );
-  res.json(editList);
+  res.json(editFolder);
 });
 
-app.put("/api/pdca/user/:userId/lists/:listId/:pdcaId", async (req, res) => {
-  const { pdcaId } = req.params;
-  const { stage, description } = req.body;
-  const editPdca = await pdcaModel.findByIdAndUpdate(
-    pdcaId,
-    { stage, description },
-    { new: true }
-  );
-  res.json(editPdca);
+app.get("/api/pdca/user/:userId/folders/:folderId", async (req, res) => {
+  const folder = await folderModel.findById(req.params.folderId).populate("lists");
+  res.json({ listData: folder.lists, folderName: folder.name });
 });
 
-app.delete("/api/pdca/user/:userId/lists/:listId/:pdcaId", async (req, res) => {
-  const { listId, pdcaId } = req.params;
-  await listModel.findByIdAndUpdate(listId, { $pull: { pdcas: pdcaId } });
-  const deletePdca = await pdcaModel.findByIdAndDelete(pdcaId);
-  res.json(deletePdca);
+app.post("/api/pdca/user/:userId/folders/:folderId", async (req, res) => {
+  const folder = await folderModel.findById(req.params.folderId);
+  const newList = new listModel(req.body);
+  folder.lists.push(newList);
+  newList.folder = folder;
+  await folder.save();
+  await newList.save();
+
+  res.status(201).json(newList);
 });
+
+app.put(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId",
+  async (req, res) => {
+    const list = await listModel.findByIdAndUpdate(
+      req.params.listId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.json(list);
+  }
+);
+
+app.delete(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId",
+  async (req, res) => {
+    const { listId, folderId } = req.params;
+    const deleteList = await listModel.findByIdAndDelete(listId);
+    await folderModel.findByIdAndUpdate(folderId, { $pull: { lists: listId } });
+    await pdcaModel.deleteMany({ list: listId });
+    res.json(deleteList);
+  }
+);
+
+app.get(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId",
+  async (req, res) => {
+    const list = await listModel.findById(req.params.listId).populate("pdcas");
+    const pdcaData = list.pdcas;
+    console.log(list);
+    console.log(pdcaData);
+    res.json({ pdcaData, listName: list.name });
+  }
+);
+
+app.post(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId",
+  async (req, res) => {
+    const { folderId, listId } = req.params;
+    const list = await listModel.findById(listId);
+    const folder = await folderModel.findById(folderId);
+    const { stage, description } = req.body;
+    const newPdca = new pdcaModel({ stage, description });
+    list.pdcas.push(newPdca);
+    newPdca.list = list;
+    newPdca.folder = folder;
+    await list.save();
+    await newPdca.save();
+    res.status(201).json(newPdca);
+  }
+);
+
+app.put(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId/:pdcaId",
+  async (req, res) => {
+    const { pdcaId } = req.params;
+    const { stage, description } = req.body;
+    const editPdca = await pdcaModel.findByIdAndUpdate(
+      pdcaId,
+      { stage, description },
+      { new: true }
+    );
+    res.json(editPdca);
+  }
+);
+
+app.delete(
+  "/api/pdca/user/:userId/folders/:folderId/lists/:listId/:pdcaId",
+  async (req, res) => {
+    const { listId, pdcaId } = req.params;
+    await listModel.findByIdAndUpdate(listId, { $pull: { pdcas: pdcaId } });
+    const deletePdca = await pdcaModel.findByIdAndDelete(pdcaId);
+    res.json(deletePdca);
+  }
+);
 
 app.get("/example", async (req, res) => {
   const pdcas = await listModel.find({});

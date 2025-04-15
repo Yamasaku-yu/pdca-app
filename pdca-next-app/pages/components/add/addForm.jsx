@@ -1,3 +1,5 @@
+import styles from "../../styles/Card.module.css"
+
 export default function AddForm({newDiscription,setNewDiscription,addPdca}) {
   return (
     <div className="col">
@@ -8,7 +10,7 @@ export default function AddForm({newDiscription,setNewDiscription,addPdca}) {
         value={newDiscription}
         onChange={(e) => setNewDiscription(e.target.value)}
       />
-      <button className="btn btn-dark" onClick={newDiscription?addPdca:undefined
+      <button className={`btn ${styles.bgDark}`} onClick={newDiscription?addPdca:undefined
       }>
         追加
       </button>

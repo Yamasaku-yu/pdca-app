@@ -13,6 +13,16 @@ const pdcaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "LIST",
   },
+  folder: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "FOLDER",
+  },
+  todos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TODO",
+    }
+  ],
 });
 
 const PDCA = mongoose.model("PDCA", pdcaSchema);

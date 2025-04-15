@@ -55,13 +55,13 @@ export default function Navbar({ brandUrl }) {
         </button>
         <div className="collapse navbar-collapse" id="navbarToggler">
           {session ? (
-            <ul className="navbar-nav">
+            <ul className="navbar-nav d-flex w-100">
               <li className="nav-item">
                 <a className="nav-link" href={`/${brandUrl}`}>
                   フォルダ
                 </a>
               </li>
-              <li className="nav-item">
+              <li className="nav-item ms-lg-auto">
                 <button className="btn btn-link nav-link" onClick={logout}>
                   ログアウト
                 </button>

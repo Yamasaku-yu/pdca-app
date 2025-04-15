@@ -1,7 +1,9 @@
+import styles from "../../styles/Card.module.css"
+
 export default function AlertButton({alertState,setAlertState,setEditing,setNameEditingId}) {
     return (
         <button
-          className="btn btn-dark my-2"
+          className={`btn my-2 ${styles.bgDark}`}
           onClick={() => {
             setAlertState(!alertState);
             setEditing(false);

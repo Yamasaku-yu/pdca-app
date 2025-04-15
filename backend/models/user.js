@@ -9,10 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lists: [
+  folders: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "LIST",
+      ref: "FOLDER",
     },
   ],
 });

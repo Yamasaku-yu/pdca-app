@@ -5,15 +5,19 @@ const listSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+    required: true,
+  },
   pdcas: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "PDCA",
     },
   ],
-  user: {
+  folder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "USER",
+    ref: "FOLDER",
   },
 });
 
