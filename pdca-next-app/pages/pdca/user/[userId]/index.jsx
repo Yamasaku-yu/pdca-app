@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "../../../components/card";
 import Navbar from "../../../components/navbar";
 import { useRouter } from "next/router";
-import styles from "../../../styles/Card.module.css";
 
 export default function Folder() {
   const [folderData, setFolderData] = useState([]);
