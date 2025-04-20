@@ -1,4 +1,4 @@
-# PDCAメモ管理
+# PDCAメモ管理Webアプリ
 
 ## 概要
 PDCA（Plan-Do-Check-Act）サイクルを記録・管理できるWebアプリです。
