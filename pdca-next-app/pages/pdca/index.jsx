@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar brandUrl={`/pdca`}>
       </Navbar>
       <div className="container">
-        <h1>PDCAフォルダ</h1>
+        <h1 className="mt-3">PDCAフォルダ</h1>
         <button className={`btn ${styles.bgDark}`} onClick={alertMes}>
           新規追加
         </button>
