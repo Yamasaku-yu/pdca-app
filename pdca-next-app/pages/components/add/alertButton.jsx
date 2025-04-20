@@ -4,7 +4,8 @@ export default function AlertButton({alertState,setAlertState,setEditing,setName
     return (
         <button
           className={`btn my-2 ${styles.bgDark}`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setAlertState(!alertState);
             setEditing(false);
             setNameEditingId("");

@@ -5,9 +5,8 @@ const pdcaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
+  discription: {
     type: String,
-    required: true,
   },
   list: {
     type: mongoose.Schema.Types.ObjectId,

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "../../../components/card";
 import Navbar from "../../../components/navbar";
 import { useRouter } from "next/router";
-import styles from "../../../styles/Card.module.css"
+import styles from "../../../styles/Card.module.css";
 
 export default function Folder() {
   const [folderData, setFolderData] = useState([]);
@@ -69,10 +69,22 @@ export default function Folder() {
     });
   };
 
+  const resetState = () => {
+    setEditing(false);
+    setAlertState(false);
+    setNameEditingId("");
+  }
+
   return (
     <>
-      <Navbar brandUrl={`pdca/user/${userId}`} />
-      <div className="container">
+      <Navbar brandUrl={`/pdca/user/${userId}`}>
+        <li className="nav-item">
+          <a className="nav-link" href={`/pdca/user/${userId}`}>
+            フォルダ
+          </a>
+        </li>
+      </Navbar>
+      <div className="container min-vh-100" onClick={resetState}>
         <h3 className="mt-3">PDCAフォルダ</h3>
         <AlertButton
           alertState={alertState}
@@ -80,29 +92,32 @@ export default function Folder() {
           setEditing={setEditing}
           setNameEditingId={setNameEditingId}
         />
-        {folderData.length? (
+        {folderData.length ? (
           <button
             className="btn btn-secondary ms-2"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setEditing(!editing);
               setNameEditingId("");
             }}
           >
             {editing ? "終了" : "編集"}
           </button>
-        ):(null)}
+        ) : null}
         {alertState && (
-          <div className="row alert alert-secondary my-2">
-            <AddForm
-              newDiscription={newFolder}
-              setNewDiscription={setNewFolder}
-              addPdca={addFolder}
-            />
+          <div className="row">
+            <div className="col-auto alert alert-secondary my-2" onClick={(e)=>e.stopPropagation()}>
+              <AddForm
+                newDiscription={newFolder}
+                setNewDiscription={setNewFolder}
+                addPdca={addFolder}
+              />
+            </div>
           </div>
         )}
         <ul className="list-unstyled">
           {folderData.map((item) => (
-            <li key={item._id} className="mb-2">
+            <li key={item?._id} className="mt-3">
               <Card
                 item={item}
                 userId={userId}
@@ -118,6 +133,9 @@ export default function Folder() {
           ))}
         </ul>
       </div>
+      <footer className="bg-dark text-white text-center fixed-bottom">
+        画面の一番下のフッター
+      </footer>
     </>
   );
 }

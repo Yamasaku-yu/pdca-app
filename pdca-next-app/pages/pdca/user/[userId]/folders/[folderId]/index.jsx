@@ -21,6 +21,7 @@ export default function List() {
   const router = useRouter();
   const { userId, folderId } = router.query;
   const colors = ["white", "red", "yellow", "green", "blue"];
+  const stages = ["Plan", "Do", "Check", "Act"];
 
   useEffect(() => {
     if (folderId) {
@@ -48,10 +49,11 @@ export default function List() {
         body: JSON.stringify({ name: newName, color: newColor }),
       }
     )
-      .then((res) => res.json)
-      .then(() => {
+      .then((res) => res.json())
+      .then((data) => {
         setNewName("");
         setNewColor("white");
+        stages.map((stage) => addPdca(data._id, stage));
         fetchData();
       });
   };
@@ -81,10 +83,42 @@ export default function List() {
     ).then(() => fetchData());
   };
 
+  const addPdca = (listId, stage) => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stage, discription: "" }),
+      }
+    );
+  };
+
+  const resetState = () => {
+    setAlertState(false);
+    setEditing(false);
+    setEditingId(false);
+    setEditedName("");
+    setEditedColor("");
+  };
   return (
     <>
-      <Navbar brandUrl={`pdca/user/${userId}`} />
-      <div className="container">
+      <Navbar brandUrl={`/pdca/user/${userId}`}>
+        <li className="nav-item">
+          <a className="nav-link" href={`/pdca/user/${userId}`}>
+            フォルダ
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            href={`/pdca/user/${userId}/folders/${folderId}`}
+          >
+            リスト
+          </a>
+        </li>
+      </Navbar>
+      <div className="container min-vh-100" onClick={resetState}>
         <h3 className="mt-3">{folderName}</h3>
         <AlertButton
           alertState={alertState}
@@ -95,7 +129,8 @@ export default function List() {
         {listData.length ? (
           <button
             className="btn btn-secondary ms-2"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setEditing(!editing);
               setEditingId("");
             }}
@@ -104,30 +139,38 @@ export default function List() {
           </button>
         ) : null}
         {alertState && (
-          <div className="row alert alert-secondary my-2">
-            <div className="col-auto">
-              <select
-                className={`form-select ${styles[newColor]}`}
-                value={newColor}
-                onChange={(e) => setNewColor(e.target.value)}
-              >
-                {colors?.map((color) => (
-                  <option value={color} key={color} className={styles[color]}>
-                    {color}
-                  </option>
-                ))}
-              </select>
+          <div className="row">
+            <div className="col-auto alert alert-secondary my-2" onClick={(e)=>e.stopPropagation()}>
+              <div className="row">
+                <div className="col-auto">
+                  <select
+                    className={`form-select ${styles[newColor]}`}
+                    value={newColor}
+                    onChange={(e) => setNewColor(e.target.value)}
+                  >
+                    {colors?.map((color) => (
+                      <option
+                        value={color}
+                        key={color}
+                        className={styles[color]}
+                      >
+                        {color}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <AddForm
+                  newDiscription={newName}
+                  setNewDiscription={setNewName}
+                  addPdca={addList}
+                />
+              </div>
             </div>
-            <AddForm
-              newDiscription={newName}
-              setNewDiscription={setNewName}
-              addPdca={addList}
-            />
           </div>
         )}
         <ul className="list-unstyled">
           {listData?.map((item) => (
-            <li key={item?._id} className="mb-2">
+            <li key={item?._id} className="mt-3">
               <Link
                 className={`card text-decoration-none ${styles[item?.color]}`}
                 href={
@@ -135,6 +178,7 @@ export default function List() {
                     ? "#"
                     : `/pdca/user/${userId}/folders/${folderId}/lists/${item?._id}`
                 }
+                onClick={(e) => e.stopPropagation()}
               >
                 <div className={`card-body row`}>
                   {editingId === item?._id ? (
@@ -210,6 +254,9 @@ export default function List() {
           ))}
         </ul>
       </div>
+      <footer className="bg-dark text-white text-center fixed-bottom">
+        画面の一番下のフッター
+      </footer>
     </>
   );
 }

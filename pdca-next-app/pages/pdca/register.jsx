@@ -10,28 +10,29 @@ export default function Register() {
   const router = useRouter();
 
   const registerUser = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/register`, {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/register`,
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("ユーザー登録に失敗しました");
       }
-      const data = await response.json();
+    );
+
+    const data = await response.json();
+    if (response.ok) {
       router.push(`/pdca/user/${data.userId}`);
-    } catch (error) {
-      console.error("エラー:", error.message);
-      alert("登録に失敗しました。もう一度試してください。");
+    } else {
+      alert(data.message);
     }
   };
 
   return (
     <div>
-      <Navbar brandUrl={`pdca`} />
+      <Navbar brandUrl={`/pdca`}>
+        
+      </Navbar>
       <UserForm
         title={"ユーザー登録"}
         username={username}
@@ -41,7 +42,9 @@ export default function Register() {
         registerUser={registerUser}
         btnName={"登録"}
       />
+      <footer className="bg-dark text-white text-center fixed-bottom">
+        画面の一番下のフッター
+      </footer>
     </div>
   );
 }
-

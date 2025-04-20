@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-export default function Navbar({ brandUrl }) {
+export default function Navbar({ brandUrl,children }) {
   const router = useRouter();
   const [session, setSession] = useState();
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Navbar({ brandUrl }) {
   return (
     <nav className="navbar navbar-expand-lg bg-secondary navbar-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href={`/${brandUrl}`}>
+        <a className="navbar-brand" href={`${brandUrl}`}>
           PDCA
         </a>
         <button
@@ -56,11 +56,7 @@ export default function Navbar({ brandUrl }) {
         <div className="collapse navbar-collapse" id="navbarToggler">
           {session ? (
             <ul className="navbar-nav d-flex w-100">
-              <li className="nav-item">
-                <a className="nav-link" href={`/${brandUrl}`}>
-                  フォルダ
-                </a>
-              </li>
+              {children}
               <li className="nav-item ms-lg-auto">
                 <button className="btn btn-link nav-link" onClick={logout}>
                   ログアウト

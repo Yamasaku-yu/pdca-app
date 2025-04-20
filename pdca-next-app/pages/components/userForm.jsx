@@ -23,7 +23,7 @@ export default function UserForm({title,username,password,setUsername,setPasswor
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       ></input>
-      <button className="btn btn-dark mt-3" onClick={username&&password?registerUser:undefined}>
+      <button className="btn btn-dark mt-3" onClick={registerUser}>
         {btnName}
       </button>
     </div>

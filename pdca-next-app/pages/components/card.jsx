@@ -16,6 +16,7 @@ export default function Card({
     <Link
       className={`card text-decoration-none ${styles.white}`}
       href={editing ? "#" : `/pdca/user/${userId}/folders/${item?._id}`}
+      onClick={(e)=>e.stopPropagation()}
     >
       <div className="card-body row">
         {nameEditingId === item?._id ? (

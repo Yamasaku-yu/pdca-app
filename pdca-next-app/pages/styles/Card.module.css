@@ -48,3 +48,7 @@
 .myDiv:focus {
   outline: none;
 }
+
+.myBtn:active {
+  border-color: transparent !important;
+}

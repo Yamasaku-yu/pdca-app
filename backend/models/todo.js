@@ -4,21 +4,23 @@ const todoSchema = new mongoose.Schema({
   discription: {
     type: String,
   },
+  check: {
+    type:Boolean,
+  },
   pdca: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "PDCA",
   },
-  list:{
+  list: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "LIST"
+    ref: "LIST",
   },
-  folder:{
+  folder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "FOLDER"
+    ref: "FOLDER",
   },
 });
 
-const TODO = mongoose.model("TODO", pdcaSchema);
+const TODO = mongoose.model("TODO", todoSchema);
 
 module.exports = TODO;
-
