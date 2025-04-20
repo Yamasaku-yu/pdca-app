@@ -33,7 +33,7 @@ export default function CardContent({
             </button>
           )}
         </div>
-        {item.stage === "Do" ? (
+        {item?.stage === "Do" ? (
           <>
             <div>
               {item.todos.map((todo) => (
