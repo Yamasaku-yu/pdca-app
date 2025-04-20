@@ -14,7 +14,7 @@ const MongoStore = require("connect-mongo");
 
 require("dotenv").config();
 
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 
 mongoose
   .connect(process.env.MONGO_URI)
