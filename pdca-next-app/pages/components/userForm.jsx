@@ -1,7 +1,7 @@
 export default function UserForm({title,username,password,setUsername,setPassword,registerUser,btnName}) {
   return (
     <div className="container">
-      <h1>{title}</h1>
+      <h1 className="mt-3">{title}</h1>
       <label className="form-label" htmlFor="username">
         UserName
       </label>
