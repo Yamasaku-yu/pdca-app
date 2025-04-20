@@ -17,7 +17,7 @@ PDCA（Plan-Do-Check-Act）サイクルを記録・管理できるWebアプリ�
 - その他：Render, vercel でのデプロイ
 
 ## URL
-- アプリURL：[PDCAアプリページ](https://pdca-app.onrender.com/pdca)
+- アプリURL：[PDCAアプリページ](https://pdca-app.vercel.app/pdca)
 
 ## 工夫したポイント
 - express-sessionを使ってセキュアなセッション管理を実現
