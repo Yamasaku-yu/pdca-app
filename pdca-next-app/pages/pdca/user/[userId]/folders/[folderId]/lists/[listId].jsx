@@ -26,7 +26,7 @@ export default function Pdca() {
   const divRef = useRef(null);
   const liRef = useRef(null);
 
-  const stages = ["Plan", "Do", "Check", "Act"];
+  const stages = ["Plan", "Do", "Check", "Action"];
 
   useEffect(() => {
     if (listId) {

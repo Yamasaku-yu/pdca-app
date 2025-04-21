@@ -21,7 +21,7 @@ export default function List() {
   const router = useRouter();
   const { userId, folderId } = router.query;
   const colors = ["white", "red", "yellow", "green", "blue"];
-  const stages = ["Plan", "Do", "Check", "Act"];
+  const stages = ["Plan", "Do", "Check", "Action"];
 
   useEffect(() => {
     if (folderId) {
