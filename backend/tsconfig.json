@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "types": ["node","express-session"]
+    "types": ["node","express-session","express"]
   },
   "include": ["types"]
 }
