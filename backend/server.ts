@@ -12,16 +12,11 @@ import session from "express-session";
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 import { Request, Response } from "express";
+
 type MyError = Error & {
   status?: number;
   code?: string;
 };
-
-declare module "express-session" {
-  interface SessionData {
-    userId?: string;
-  }
-}
 
 require("dotenv").config();
 
@@ -66,11 +61,14 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin:string|undefined, callback:(err:Error|null,allow:boolean)=>void) {
+    origin: function (
+      origin: string | undefined,
+      callback: (err: Error | null, allow: boolean) => void
+    ) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"),false);
+        callback(new Error("Not allowed by CORS"), false);
       }
     },
     credentials: true,
