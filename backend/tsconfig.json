@@ -9,5 +9,5 @@
     "typeRoots": ["./node_modules/@types", "types"],
     "types": ["node","express-session","express","bcrypt"]
   },
-  "include": ["server.ts","types","./node_modules/@types"]
+  "include": ["server.ts","types"]
 }
