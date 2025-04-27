@@ -1,4 +1,4 @@
-const express = require("express");
+import express,{ Request, Response } from "express";
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -11,7 +11,6 @@ const bcrypt = require("bcrypt");
 import session from "express-session";
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
-import { Request, Response } from "express";
 
 type MyError = Error & {
   status?: number;
@@ -85,7 +84,7 @@ app.post(
   async (
     req: Request<{}, {}, { username: string; password: string }>,
     res: Response
-  ) => {
+  ):Promise<any> => {
     try {
       const { username, password } = req.body;
       if (!username || !password) {
@@ -122,7 +121,7 @@ app.post(
   async (
     req: Request<{}, {}, { username: string; password: string }>,
     res: Response
-  ) => {
+  ):Promise<any> => {
     console.log(req.body);
     try {
       const { username, password } = req.body;
