@@ -8,5 +8,6 @@
     "outDir": "./dist",
     "rootDir": "./"
   },
-  "include": ["server.ts","types"]
+  "include": ["server.ts"],
+  "exclude": ["node_modules"]
 }
