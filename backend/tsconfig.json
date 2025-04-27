@@ -6,8 +6,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "typeRoots": ["./node_modules/@types", "types"],
-    "types": ["node","express-session","express","bcrypt"]
   },
   "include": ["server.ts","types"]
 }
