@@ -1,6 +1,38 @@
-import styles from "../../styles/Card.module.css";
+import styles from "../styles/Card.module.css"
 
-export default function CardContent({
+type TodoProp = {
+  _id: string;
+  check: boolean;
+  discription: string;
+}
+
+type ItemProp = {
+  _id: string;
+  stage: string;
+  discription: string;
+  todos: TodoProp[];
+}
+
+type Props = {
+  item: ItemProp;
+  handleEditSave: (pdcaId: string, stage: string, discription: string) => Promise<void>;
+  divRef: React.RefObject<HTMLDivElement|null>;
+  handleCardInput: () => void;
+  setEditedDiscription: React.Dispatch<React.SetStateAction<string>>;
+  addTodo: (pdcaId: string) => Promise<void>;
+  editingId: string;
+  liRef: React.RefObject<HTMLDivElement|null>;
+  todoInput: () => void;
+  todoDiscription: string;
+  setTodoDiscription: React.Dispatch<React.SetStateAction<string>>;
+  editTodo: (pdcaId: string, todoId: string, discription: string) => Promise<void>;
+  editedDiscription: string;
+  deletePdca: (pdcaId: string) => Promise<void>;
+  deleteTodo: (pdcaId: string, todoId: string) => Promise<void>;
+  editCheck: (pdcaId: string, todoId: string, check: boolean) => Promise<void>;
+}
+
+const CardContent: React.FC<Props> = ({
   item,
   handleEditSave,
   divRef,
@@ -8,7 +40,6 @@ export default function CardContent({
   setEditedDiscription,
   addTodo,
   editingId,
-  setEditingId,
   liRef,
   todoInput,
   todoDiscription,
@@ -18,7 +49,7 @@ export default function CardContent({
   deletePdca,
   deleteTodo,
   editCheck
-}) {
+}) => {
   return (
     <div className="card my-2">
       <div className="card-body position-relative">
@@ -44,14 +75,14 @@ export default function CardContent({
                       className="form-check-input"
                       checked={todo?.check}
                       onChange={() => {
-                        editCheck(item?._id,todo?._id,!todo?.check);
+                        editCheck(item?._id, todo?._id, !todo?.check);
                       }}
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e: React.MouseEvent<HTMLInputElement>) => e.stopPropagation()}
                     />
                   </div>
                   <div
                     className={`${styles.myDiv} col px-0`}
-                    onBlur={() => editTodo(item?._id, todo?._id,todoDiscription)}
+                    onBlur={() => editTodo(item?._id, todo?._id, todoDiscription)}
                     contentEditable
                     ref={liRef}
                     suppressContentEditableWarning={true}
@@ -102,3 +133,5 @@ export default function CardContent({
     </div>
   );
 }
+
+export default CardContent;

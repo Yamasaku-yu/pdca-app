@@ -1,10 +1,16 @@
 import styles from "../../styles/Card.module.css";
 
-export default function AddForm({
+type Props = {
+  newDiscription: string;
+  setNewDiscription: React.Dispatch<React.SetStateAction<string>>;
+  addPdca: () => Promise<void>
+}
+
+const AddForm: React.FC<Props> = ({
   newDiscription,
   setNewDiscription,
   addPdca,
-}) {
+}) => {
   return (
     <div className="col-auto">
       <div className="row">
@@ -14,7 +20,7 @@ export default function AddForm({
             type="text"
             placeholder="入力してください"
             value={newDiscription}
-            onChange={(e) => setNewDiscription(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDiscription(e.target.value)}
           />
         </div>
         <div className="col-auto">
@@ -29,3 +35,5 @@ export default function AddForm({
     </div>
   );
 }
+
+export default AddForm;

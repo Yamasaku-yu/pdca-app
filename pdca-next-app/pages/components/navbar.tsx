@@ -1,9 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState,ReactNode } from "react";
 import { useRouter } from "next/router";
-export default function Navbar({ brandUrl,children }) {
+
+type Props = {
+  brandUrl:string;
+  children?:ReactNode;
+}
+
+const Navbar:React.FC<Props> = ({ brandUrl,children }) => {
   const router = useRouter();
-  const [session, setSession] = useState();
+  const [session, setSession] = useState<string>();
   useEffect(() => {
     fetchData();
   }, []);
@@ -82,3 +88,5 @@ export default function Navbar({ brandUrl,children }) {
     </nav>
   );
 }
+
+export default Navbar;

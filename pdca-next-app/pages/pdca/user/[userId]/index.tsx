@@ -6,13 +6,18 @@ import Card from "../../../components/card";
 import Navbar from "../../../components/navbar";
 import { useRouter } from "next/router";
 
+type FolderType = {
+  _id:string;
+  name:string;
+}
+
 export default function Folder() {
-  const [folderData, setFolderData] = useState([]);
-  const [alertState, setAlertState] = useState(false);
-  const [newFolder, setNewFolder] = useState("");
-  const [editing, setEditing] = useState(false);
-  const [nameEditingId, setNameEditingId] = useState("");
-  const [editedName, setEditedName] = useState("");
+  const [folderData, setFolderData] = useState<FolderType[]>([]);
+  const [alertState, setAlertState] = useState<boolean>(false);
+  const [newFolder, setNewFolder] = useState<string>("");
+  const [editing, setEditing] = useState<boolean>(false);
+  const [nameEditingId, setNameEditingId] = useState<string>("");
+  const [editedName, setEditedName] = useState<string>("");
 
   const router = useRouter();
   const { userId } = router.query;
@@ -25,13 +30,13 @@ export default function Folder() {
   }, [userId]);
 
   const fetchData = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`)
+    return fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`)
       .then((res) => res.json())
       .then((data) => setFolderData(data));
   };
 
   const addFolder = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`, {
+    return fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: newFolder }),
@@ -44,8 +49,8 @@ export default function Folder() {
       });
   };
 
-  const deleteFolder = (folderId) => {
-    fetch(
+  const deleteFolder = (folderId:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}`,
       {
         method: "DELETE",
@@ -53,8 +58,8 @@ export default function Folder() {
     ).then(() => fetchData());
   };
 
-  const nameChange = (folderId) => {
-    fetch(
+  const nameChange = (folderId:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}`,
       {
         method: "PUT",
@@ -94,7 +99,7 @@ export default function Folder() {
         {folderData.length ? (
           <button
             className="btn btn-secondary ms-2"
-            onClick={(e) => {
+            onClick={(e:React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation();
               setEditing(!editing);
               setNameEditingId("");
@@ -105,7 +110,7 @@ export default function Folder() {
         ) : null}
         {alertState && (
           <div className="row">
-            <div className="col-auto alert alert-secondary my-2" onClick={(e)=>e.stopPropagation()}>
+            <div className="col-auto alert alert-secondary my-2" onClick={(e:React.MouseEvent<HTMLDivElement>)=>e.stopPropagation()}>
               <AddForm
                 newDiscription={newFolder}
                 setNewDiscription={setNewFolder}

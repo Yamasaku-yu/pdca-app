@@ -1,7 +1,19 @@
 import Link from "next/link";
 import styles from "../styles/Card.module.css";
 
-export default function Card({
+type Props = {
+  item:{_id:string;name:string};
+  userId?:string|string[];
+  editing:boolean;
+  deleteFolder:(folderId:string)=>Promise<void>;
+  nameEditingId:string;
+  setNameEditingId:React.Dispatch<React.SetStateAction<string>>;
+  nameChange:(folderId:string)=>Promise<void>;
+  editedName:string;
+  setEditedName:React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Card:React.FC<Props> = ({
   item,
   userId,
   editing,
@@ -11,7 +23,7 @@ export default function Card({
   nameChange,
   editedName,
   setEditedName,
-}) {
+}) => {
   return (
     <Link
       className={`card text-decoration-none ${styles.white}`}
@@ -55,7 +67,7 @@ export default function Card({
               <div className="col-sm-2 col-3">
                 <button
                   className="btn btn-outline-dark btn-sm"
-                  style={{ "--bs-btn-padding-y": " .1000rem" }}
+                  style={{ "--bs-btn-padding-y": " .1000rem" } as React.CSSProperties}
                   onClick={() => deleteFolder(item?._id)}
                 >
                   ×
@@ -68,3 +80,5 @@ export default function Card({
     </Link>
   );
 }
+
+export default Card;

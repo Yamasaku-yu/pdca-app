@@ -1,30 +1,36 @@
 import { useEffect, useState, useRef } from "react";
-import AlertButton from "../../../../../../components/add/alertButton";
 import StageSelect from "../../../../../../components/add/stageSelect";
-import AddForm from "../../../../../../components/add/addForm";
-import EStageSelect from "../../../../../../components/edit/eStageSelect";
-import EditForm from "../../../../../../components/edit/editForm";
-import SaveButton from "../../../../../../components/edit/saveButton";
-import DeleteButton from "../../../../../../components/edit/deleteButton";
-import CardContent from "../../../../../../components/edit/cardContent";
+import CardContent from "../../../../../../components/cardContent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import Navbar from "../../../../../../components/navbar";
 import styles from "../../../../../../styles/Card.module.css";
 
+type TodoType = {
+  _id: string;
+  check: boolean;
+  discription: string;
+}
+
+type PdcaType = {
+  _id:string;
+  stage:string;
+  discription:string;
+  todos:TodoType[]
+}
+
 export default function Pdca() {
   const router = useRouter();
   const { userId, folderId, listId } = router.query;
-  const [pdcaData, setPdcaData] = useState([]);
-  const [newStage, setNewStage] = useState("Plan");
-  const [editingId, setEditingId] = useState("");
-  const [editedDiscription, setEditedDiscription] = useState("");
-  const [alertState, setAlertState] = useState(false);
-  const [listName, setListName] = useState("");
-  const [editing, setEditing] = useState(false);
-  const [todoDiscription, setTodoDiscription] = useState("");
-  const divRef = useRef(null);
-  const liRef = useRef(null);
+  const [pdcaData, setPdcaData] = useState<PdcaType[]>([]);
+  const [newStage, setNewStage] = useState<string>("Plan");
+  const [editingId, setEditingId] = useState<string>("");
+  const [editedDiscription, setEditedDiscription] = useState<string>("");
+  const [listName, setListName] = useState<string>("");
+  const [editing, setEditing] = useState<boolean>(false);
+  const [todoDiscription, setTodoDiscription] = useState<string>("");
+  const divRef = useRef<HTMLDivElement>(null);
+  const liRef = useRef<HTMLDivElement>(null);
 
   const stages = ["Plan", "Do", "Check", "Action"];
 
@@ -35,7 +41,7 @@ export default function Pdca() {
   }, [listId]);
 
   const fetchData = () => {
-    fetch(
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}`
     )
       .then((res) => res.json())
@@ -46,8 +52,8 @@ export default function Pdca() {
       .catch((err) => console.error("Error fetching PDCA data", err));
   };
 
-  const addPdca = (stage) => {
-    fetch(
+  const addPdca = (stage:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}`,
       {
         method: "POST",
@@ -74,8 +80,8 @@ export default function Pdca() {
     }
   };
 
-  const handleEditSave = (pdcaId, stage, discription) => {
-    fetch(
+  const handleEditSave = (pdcaId:string, stage:string, discription:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}`,
       {
         method: "PUT",
@@ -90,20 +96,20 @@ export default function Pdca() {
       });
   };
 
-  const deletePdca = (pdcaId) => {
-    fetch(
+  const deletePdca = (pdcaId:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}`,
       {
         method: "DELETE",
       }
     ).then(() => {
-      setEditingId(null);
+      setEditingId("");
       fetchData();
     });
   };
 
-  const addTodo = (pdcaId) => {
-    fetch(
+  const addTodo = (pdcaId:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}`,
       {
         method: "POST",
@@ -113,8 +119,8 @@ export default function Pdca() {
     ).then(() => fetchData());
   };
 
-  const editTodo = (pdcaId, todoId, discription) => {
-    fetch(
+  const editTodo = (pdcaId:string, todoId:string, discription:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}/${todoId}`,
       {
         method: "PUT",
@@ -124,8 +130,8 @@ export default function Pdca() {
     ).then(() => fetchData());
   };
 
-  const editCheck = (pdcaId, todoId, check) => {
-    fetch(
+  const editCheck = (pdcaId:string, todoId:string, check:boolean) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}/${todoId}`,
       {
         method: "PUT",
@@ -135,8 +141,8 @@ export default function Pdca() {
     ).then(() => fetchData());
   };
 
-  const deleteTodo = (pdcaId, todoId) => {
-    fetch(
+  const deleteTodo = (pdcaId:string, todoId:string) => {
+    return fetch(
       `${process.env.NEXT_PUBLIC_API_BASE}/api/pdca/user/${userId}/folders/${folderId}/lists/${listId}/${pdcaId}/${todoId}`,
       {
         method: "DELETE",
@@ -195,12 +201,9 @@ export default function Pdca() {
                 divRef={divRef}
                 handleCardInput={handleCardInput}
                 item={item}
-                editing={editing}
-                styles={styles}
                 editedDiscription={editedDiscription}
                 setEditedDiscription={setEditedDiscription}
                 editingId={editingId}
-                setEditingId={setEditingId}
                 liRef={liRef}
                 todoInput={todoInput}
                 todoDiscription={todoDiscription}

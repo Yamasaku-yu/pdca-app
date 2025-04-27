@@ -5,8 +5,8 @@ import UserForm from "../components/userForm";
 import Navbar from "../components/navbar";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   const registerUser = async () => {
