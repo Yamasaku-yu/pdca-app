@@ -43,7 +43,7 @@ export default function Login() {
 
       </Navbar>
       {loading ? (
-        <div>
+        <div className="container">
           <h1>ログイン中...</h1>
         </div>) : (
         <UserForm

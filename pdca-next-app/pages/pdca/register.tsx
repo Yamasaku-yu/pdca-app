@@ -45,7 +45,7 @@ export default function Register() {
       <Navbar brandUrl={`/pdca`}>
 
       </Navbar>
-      {loading ? (<div>
+      {loading ? (<div className="container">
         <h1>登録中...</h1>
       </div>) : (<UserForm
         title={"ユーザー登録"}
