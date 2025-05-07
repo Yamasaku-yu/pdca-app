@@ -3,13 +3,15 @@ import styles from "../../styles/Card.module.css";
 type Props = {
   newDiscription: string;
   setNewDiscription: React.Dispatch<React.SetStateAction<string>>;
-  addPdca: () => Promise<void>
+  addPdca: () => Promise<void>;
+  inputDiscription:string;
 }
 
 const AddForm: React.FC<Props> = ({
   newDiscription,
   setNewDiscription,
   addPdca,
+  inputDiscription,
 }) => {
   return (
     <div className="col-auto">
@@ -18,7 +20,7 @@ const AddForm: React.FC<Props> = ({
           <input
             className="form-control"
             type="text"
-            placeholder="入力してください"
+            placeholder={inputDiscription}
             value={newDiscription}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDiscription(e.target.value)}
           />

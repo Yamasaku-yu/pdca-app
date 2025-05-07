@@ -115,6 +115,7 @@ export default function Folder() {
                 newDiscription={newFolder}
                 setNewDiscription={setNewFolder}
                 addPdca={addFolder}
+                inputDiscription = {"フォルダ名を入力してください"}
               />
             </div>
           </div>

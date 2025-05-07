@@ -169,6 +169,7 @@ export default function List() {
                   newDiscription={newName}
                   setNewDiscription={setNewName}
                   addPdca={addList}
+                  inputDiscription={"リスト名を入力してください"}
                 />
               </div>
             </div>
