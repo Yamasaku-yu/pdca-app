@@ -6,6 +6,8 @@ import Navbar from "../../../../../components/navbar";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "../../../../../styles/Card.module.css";
+import {useAppSelector} from "../../../../../../redux/hooks"
+import FilterForm from "../../../../../components/FilterForm";
 
 type ListType = {
   _id:string;
@@ -28,6 +30,14 @@ export default function List() {
   const { userId, folderId } = router.query;
   const colors = ["white", "red", "yellow", "green", "blue"];
   const stages = ["Plan", "Do", "Check", "Action"];
+  const {category,period,keyword} = useAppSelector(state=>state.filter);
+
+  const filteredList = listData.filter((list)=>{
+    const matchCategory = category==="すべて"||category === list.color;
+    const matchKeyword = list.name.includes(keyword);
+
+    return matchCategory && matchKeyword;
+  });
 
   useEffect(() => {
     if (folderId) {
@@ -169,14 +179,15 @@ export default function List() {
                   newDiscription={newName}
                   setNewDiscription={setNewName}
                   addPdca={addList}
-                  inputDiscription={"リスト名を入力してください"}
+                  inputDiscription={"リスト名"}
                 />
               </div>
             </div>
           </div>
         )}
+        <FilterForm/>
         <ul className="list-unstyled">
-          {listData?.map((item) => (
+          {filteredList?.map((item) => (
             <li key={item?._id} className="mt-3">
               <Link
                 className={`card text-decoration-none ${styles[item?.color]}`}
